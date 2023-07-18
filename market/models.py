@@ -9,8 +9,8 @@ class User(db.Model):
     budget = db.Column(db.Integer(), nullable=False, default=1000)
     items = db.relationship('Item', backref='owned_user', lazy=True)
     
-    #def __repr__(self):
-    #    return f'Item {self.name}'
+    def __repr__(self):
+        return f'Item {self.name}'
     
 
 
@@ -25,7 +25,7 @@ class Item(db.Model):
     description = db.Column(db.String(length=1024), nullable=False, unique=True)
     owner = db.Column(db.Integer(), db.ForeignKey('user.id')) # user.id is the table name and id is the column name
 
-    #def __repr__(self):
-    #    return f'Item {self.name}'
+    def __repr__(self):
+        return f'Item {self.name}'
     
 
