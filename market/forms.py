@@ -24,3 +24,9 @@ class RegisterFrom(FlaskForm):
     submit = SubmitField(label='Create Account')
     
     
+class LoginForm(FlaskForm):
+    username = StringField(label='Username:', validators=[DataRequired()])
+    password = PasswordField(label='Password:', validators=[DataRequired()])
+    submit = SubmitField(label='Sign in')
+    
+    

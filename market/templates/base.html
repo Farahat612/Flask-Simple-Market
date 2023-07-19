@@ -57,12 +57,22 @@
    <body>
     <nav>
       <div class="navbar">
-        <div class="logo"><a href="#">Flask Market</a></div>
+        <div class="logo"><a href="{{ url_for('home_page') }}">Flask Market</a></div>
         <ul class="menu">
           <li><a href="{{ url_for('home_page') }}">Home</a></li>
           <li><a href="{{ url_for('market_page') }}">Market</a></li>
-          <li><a href="#Contact">Login</a></li>
-          <li><a href="{{ url_for('register_page') }}">Register</a></li>
+          
+          {% if current_user.is_authenticated %}
+            
+            <li><a>Welcome, {{ current_user.username }}</a></li>
+            <li><a style="color: lawngreen; font-weight: bold; ">${{ current_user.prettier_budget }}</a></li>
+            <li><a href="{{ url_for('logout_page') }}">Logout</a></li>
+            
+          {% else %}
+            <li><a href="{{ url_for('login_page') }}">Login</a></li>
+            <li><a href="{{ url_for('register_page') }}">Register</a></li>
+
+          {% endif %}
         </ul>
       </div>
     </nav>
@@ -71,7 +81,7 @@
           {% for categroy, message in messages %}
             <div class="alert alert-{{ category }}">
               <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
-                <span aria-hiddens="true"> &times; </span>
+                <span aria-hiddens="true">&times;</span>
               </button>
               {{ message }}
             </div>
