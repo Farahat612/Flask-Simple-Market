@@ -17,6 +17,10 @@ class User(db.Model, UserMixin):
     budget = db.Column(db.Integer(), nullable=False, default=1000)
     items = db.relationship('Item', backref='owned_user', lazy=True)
     
+    def __repr__(self):
+        return f'Item {self.name}'    
+    
+    
     @property
     def prettier_budget(self):
         if len(str(self.budget)) >= 4:
@@ -40,11 +44,13 @@ class User(db.Model, UserMixin):
     
     def can_purchase(self, item_obj):
         return self.budget >= item_obj.price
+    
+    def can_sell(self, item_obj):
+        return item_obj in self.items
 
     
     
-    def __repr__(self):
-        return f'Item {self.name}'
+
     
 
 
@@ -66,3 +72,10 @@ class Item(db.Model):
         self.owner = user.id
         user.budget -= self.price
         db.session.commit()
+    
+    def sell(self, user):
+        self.owner = None
+        user.budget += self.price
+        db.session.commit()
+    
+    
